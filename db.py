@@ -50,5 +50,33 @@ def login():
     
         #return "login success"
     return "done with error"
+@app.route("/signup")
+def signup():
+    name = request.args.get("name")
+    email = request.args.get("email")
+    password = request.args.get("password")
+    db = pymysql.connect(db_data.get("url"), db_data.get("user"), db_data.get("password"), db_data.get("dbname"))
+    cursor = db.cursor()
+    try:
+        sql = "SELECT * FROM %s.account WHERE %s.account.email = %s"%(db_data.get("dbname"), db_data.get("dbname"), email)
+        cursor.execute(sql)
+        acc_result = cursor.fetchall()
+    except:
+        print("Error: "+sql)
+    if(len(acc_result)==0):
+        #not used, create new account
+        try:
+            sql = 'INSERT INTO account(account_ID, email, name, password, roomii_ID) VALUES(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%("0002", email, name, password, "0002")
+            cursor.execute(sql)
+            db.close()
+            return "success"
+        except:
+            print("insert failed")
+            return "insert failed"
+    else:
+        return "email"
+
+        #email used, return error 
+    return "Done with error"
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
