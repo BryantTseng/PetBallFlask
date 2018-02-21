@@ -6,7 +6,7 @@ app=Flask(__name__)
 db_data = {
     "user" : "android",
     "password" : "1234",
-    "url" : "192.168.3.113",
+    "url" : "172.20.10.3",
     "dbname" : "roomii",
     "table_account" : "account",
     "roomii_account" : "roomii"
@@ -30,7 +30,7 @@ def login():
         print('Error: '+sql)
     if(len(acc_result)==0):#not in table
         print("not in table")
-        return "error with email or password"
+        return jsonify(type="login",name="failed",email="failed",roomii_ip="failed")
     else:#in the table
         print(acc_result)
         sql='SELECT * FROM %s.roomii WHERE %s.roomii.roomii_ID = %s'%(db_data.get("dbname"), db_data.get("dbname"), acc_result[0][4])
@@ -46,7 +46,7 @@ def login():
             print("no connected roomi, please setup")
         else:
             print("find roomii!")
-    return jsonify(name=acc_result[0][2],email=acc_result[0][1],roomii_ip=roomii_result[0][2])
+    return jsonify(type="login",name=acc_result[0][2],email=acc_result[0][1],roomii_ip=roomii_result[0][2])
     
         #return "login success"
     return "done with error"

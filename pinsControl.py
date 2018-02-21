@@ -4,6 +4,8 @@ from flask import Flask, render_template, request
 import RPi.GPIO as GPIO
 import time
 import sys
+import os
+import pygame
 
 app = Flask(__name__)
 
@@ -24,7 +26,7 @@ pins = {
 for pin in pins:
    GPIO.setup(pin, GPIO.OUT)
    GPIO.output(pin, GPIO.LOW)
-
+ipaddress = "0.0.0.0"
 @app.route("/")
 def hello():
     for pin in pins:
@@ -36,6 +38,13 @@ def hello():
 def data():
    for pin in pins:
        pins
+    return 
+@app.route('/camera/<command>')
+def camera(command):
+    if command =='start':
+        os.system("raspivid -t 999999 -h 1080 -w 1920 -fps 30 -hf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse !  rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host= "+ipaddress+" port=5000")
+    elif command == 'stop':
+    elif command == 'capture':
     return 
 @app.route('/movemment/<action>')
 def command(action):
@@ -67,7 +76,17 @@ def color(color):
     if color == 'Red':
     elif color == 'Blue':
     elif color == 'Green':
-    return 'yo'
+    return 'color shown'
+@app.route('music/<track>')
+def music(track):
+    pygame.mixer.init()
+    if track == 'a':
+        pygame.mixer.music.load('a')
+    elif track == 'b':
+        pygame.mixer.music.load('b')
+    while pygame.mixer.music.get_busy() == True:
+        continue
+    return 'music played'
 @app.route("/readPin/<pin>")
 def readPin(pin):
    try:
