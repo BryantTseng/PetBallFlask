@@ -1,11 +1,12 @@
 from __future__ import print_function
-from flaskext.mysql import MySQL
+#from flaskext.mysql import MySQL
 from flask import Flask, render_template, request
 import RPi.GPIO as GPIO
 import time
 import sys
 import os
 import pygame
+import socket
 
 app = Flask(__name__)
 
@@ -27,6 +28,8 @@ for pin in pins:
    GPIO.setup(pin, GPIO.OUT)
    GPIO.output(pin, GPIO.LOW)
 ipaddress = "0.0.0.0"
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('127.0.0.1','8989'))
 @app.route("/")
 def hello():
     for pin in pins:
@@ -53,27 +56,29 @@ def command(action):
     direction = request.args.get('direction')
     if direction == '1':    
         if action == 'go':
-            GPIO.output(6,GPIO.HIGH)
+            s.send('111')
         elif action =='stop':
-            GPIO.output(6,GPIO.LOW)
+            s.send('110')
     elif direction == '2':
         if action == 'go':
-            GPIO.output(13,GPIO.HIGH)
+            s.send('121')
         elif action =='stop':
-            GPIO.output(13,GPIO.LOW)
+            s.send('120')
     elif direction == '3':
         if action == 'go':
-            GPIO.output(19,GPIO.HIGH)
+            s.send('131')
         elif action =='stop':
-            GPIO.output(19,GPIO.LOW)
+            s.send('130')
     elif direction == '4':
         if action == 'go':
-            GPIO.output(26,GPIO.HIGH)
+            s.send('141')
         elif action =='stop':
-            GPIO.output(26,GPIO.LOW)
+            s.send('140')
+    data = s.recv(1024)
+    print(data)
     return "yo"
             
-@app.route('color/<color>')
+@app.route('/color/<color>')
 def color(color):
     if color == 'Red':
         print('red')
@@ -82,7 +87,7 @@ def color(color):
     elif color == 'Green':
         print('green')
     return 'color shown'
-@app.route('music/<track>')
+@app.route('/music/<track>')
 def music(track):
     pygame.mixer.init()
     if track == 'a':
