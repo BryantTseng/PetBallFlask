@@ -69,7 +69,7 @@ def signup():
             sql = 'INSERT INTO account(account_ID, email, name, password, roomii_ID) VALUES(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%("0002", email, name, password, "0002")
             cursor.execute(sql)
             db.close()
-            return "success"
+            return "insert success"
         except:
             print("insert failed")
             return "insert failed"

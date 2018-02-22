@@ -36,9 +36,9 @@ def hello():
 
 @app.route("/status")
 def data():
-   for pin in pins:
+    for pin in pins:
        pins
-    return 
+    return  
 @app.route('/camera/<command>')
 def camera(command):
     if command =='start':
