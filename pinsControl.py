@@ -44,7 +44,9 @@ def camera(command):
     if command =='start':
         os.system("raspivid -t 999999 -h 1080 -w 1920 -fps 30 -hf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse !  rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host= "+ipaddress+" port=5000")
     elif command == 'stop':
+        print('stop')
     elif command == 'capture':
+        print('capture')
     return 
 @app.route('/movemment/<action>')
 def command(action):
@@ -74,8 +76,11 @@ def command(action):
 @app.route('color/<color>')
 def color(color):
     if color == 'Red':
+        print('red')
     elif color == 'Blue':
+        print('blue')
     elif color == 'Green':
+        print('green')
     return 'color shown'
 @app.route('music/<track>')
 def music(track):
