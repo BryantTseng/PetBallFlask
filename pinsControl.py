@@ -95,6 +95,7 @@ def music(track):
         pygame.mixer.music.load('cartoon001.wav')
     elif track == 'b':
         pygame.mixer.music.load('b')
+    pygame.mixer.music.play()
     while pygame.mixer.music.get_busy() == True:
         continue
     return 'music played'
