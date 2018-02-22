@@ -28,8 +28,7 @@ for pin in pins:
    GPIO.setup(pin, GPIO.OUT)
    GPIO.output(pin, GPIO.LOW)
 ipaddress = "0.0.0.0"
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('127.0.0.1','8989'))
+
 @app.route("/")
 def hello():
     for pin in pins:
@@ -53,6 +52,8 @@ def camera(command):
     return 
 @app.route('/movemment/<action>')
 def command(action):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1',8998))
     direction = request.args.get('direction')
     if direction == '1':    
         if action == 'go':
