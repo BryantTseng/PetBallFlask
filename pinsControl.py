@@ -92,7 +92,7 @@ def color(color):
 def music(track):
     pygame.mixer.init()
     if track == 'a':
-        pygame.mixer.music.load('a')
+        pygame.mixer.music.load('cartoon001.wav')
     elif track == 'b':
         pygame.mixer.music.load('b')
     while pygame.mixer.music.get_busy() == True:
