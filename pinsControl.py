@@ -76,14 +76,14 @@ def command(action):
 @app.route('/color/<color>')
 def color(color):
     if color == 'Yellow':
-        GPIO.output(pins[11], GPIO.LOW)
-        GPIO.output(pins[13], GPIO.LOW)
-        GPIO.output(pins[15], GPIO.LOW)
+        GPIO.output(11, GPIO.LOW)
+        GPIO.output(13, GPIO.LOW)
+        GPIO.output(15, GPIO.LOW)
         print('yellow')
     elif color == 'Blue':
-        GPIO.output(pins[11], GPIO.HIGH)
-        GPIO.output(pins[13], GPIO.HIGH)
-        GPIO.output(pins[15], GPIO.LOW)
+        GPIO.output(11, GPIO.HIGH)
+        GPIO.output(13, GPIO.HIGH)
+        GPIO.output(15, GPIO.LOW)
         print('blue')
     return 'color shown'
 @app.route('/music/<track>')
