@@ -14,15 +14,9 @@ GPIO.setmode(GPIO.BCM)
 
 # Create a dictionary called pins to store the pin number, name, and pin state:
 pins = {
-   6 : {'name' : 'LeftMotorForward', 'state' : GPIO.LOW},
-   13 : {'name' : 'LeftMotorBackward', 'state' : GPIO.LOW},
-   19 : {'name' : 'RightMotorForward','state' : GPIO.LOW},
-   26 : {'name' : 'RightMotorBackward','state' : GPIO.LOW},
    11 : {'name' : 'Red', 'state' : GPIO.LOW},
    13 : {'name' : 'Green', 'state' : GPIO.LOW},
    15 : {'name' : 'Blue', 'state' : GPIO.LOW}
-   #16 : {'name' : 'test1','state':GPIO,Low},
-   #20 : {'name' : 'test2','state':GPIO.Low}
    }
 for pin in pins:
    GPIO.setup(pin, GPIO.OUT)
@@ -81,12 +75,16 @@ def command(action):
             
 @app.route('/color/<color>')
 def color(color):
-    if color == 'Red':
-        print('red')
+    if color == 'Yellow':
+        GPIO.output(pins[11], GPIO.LOW)
+        GPIO.output(pins[13], GPIO.LOW)
+        GPIO.output(pins[15], GPIO.LOW)
+        print('yellow')
     elif color == 'Blue':
+        GPIO.output(pins[11], GPIO.HIGH)
+        GPIO.output(pins[13], GPIO.HIGH)
+        GPIO.output(pins[15], GPIO.LOW)
         print('blue')
-    elif color == 'Green':
-        print('green')
     return 'color shown'
 @app.route('/music/<track>')
 def music(track):
