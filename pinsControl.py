@@ -12,7 +12,6 @@ import socket
 app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM)
-subprocess = None
 # Create a dictionary called pins to store the pin number, name, and pin state:
 pins = {
    11 : {'name' : 'Red', 'state' : GPIO.LOW},
@@ -49,7 +48,7 @@ def camera(command):
     elif command == 'capture':
         print('capture')
     return 'camera'
-@app.route('/movemment/<action>')
+@app.route('/movement/<action>')
 def command(action):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('127.0.0.1',8998))
