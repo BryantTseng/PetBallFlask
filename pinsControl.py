@@ -83,7 +83,7 @@ def command(action):
         data = s.recv(1024)
         print(data)
     else:
-        return jsonify(messenge = "error")
+        return jsonify(type = "command", messenge = "error")
 
     
     return "yo"
