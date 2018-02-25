@@ -51,7 +51,10 @@ def camera(command):
 @app.route('/movement/<action>')
 def command(action):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('127.0.0.1',8998))
+    try:
+        s.connect(('127.0.0.1',8998))
+    except(Exception):
+        print("Create Socket failed")
     direction = request.args.get('direction')
     if direction == '1':    
         if action == 'go':
