@@ -50,34 +50,42 @@ def camera(command):
     return 'camera'
 @app.route('/movement/<action>')
 def command(action):
+    
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.connect(('127.0.0.1',8998))
+        flag = True
     except(Exception):
+        flag = False
         print("Create Socket failed")
     direction = request.args.get('direction')
-    if direction == '1':    
-        if action == 'go':
-            s.send('111')
-        elif action =='stop':
-            s.send('110')
-    elif direction == '2':
-        if action == 'go':
-            s.send('121')
-        elif action =='stop':
-            s.send('120')
-    elif direction == '3':
-        if action == 'go':
-            s.send('131')
-        elif action =='stop':
-            s.send('130')
-    elif direction == '4':
-        if action == 'go':
-            s.send('141')
-        elif action =='stop':
-            s.send('140')
-    data = s.recv(1024)
-    print(data)
+    if flag ==True:
+        if direction == '1':    
+            if action == 'go':
+                s.send('111')
+            elif action =='stop':
+                s.send('110')
+        elif direction == '2':
+            if action == 'go':
+                s.send('121')
+            elif action =='stop':
+                s.send('120')
+        elif direction == '3':
+            if action == 'go':
+                s.send('131')
+            elif action =='stop':
+                s.send('130')
+        elif direction == '4':
+            if action == 'go':
+                s.send('141')
+            elif action =='stop':
+                s.send('140')
+        data = s.recv(1024)
+        print(data)
+    else:
+        return "command rejected"
+
+    
     return "yo"
             
 @app.route('/color/<color>')
