@@ -1,6 +1,6 @@
 from __future__ import print_function
 #from flaskext.mysql import MySQL
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import RPi.GPIO as GPIO
 import time
 import sys
@@ -83,7 +83,7 @@ def command(action):
         data = s.recv(1024)
         print(data)
     else:
-        return "command rejected"
+        return jsonify(messenge = "error")
 
     
     return "yo"
